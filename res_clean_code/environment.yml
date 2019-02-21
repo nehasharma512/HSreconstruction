@@ -1,0 +1,14 @@
+name: hscnn
+channels:
+- peterjc123
+- defaults
+dependencies:
+- python=3.5.5
+- pytorch=0.4
+- scipy
+- h5py
+- pip:
+  - git+https://github.com/pytorch/vision.git
+  - numpy==1.14.1
+  - hdf5storage
+  - Pillow==5.0.0
