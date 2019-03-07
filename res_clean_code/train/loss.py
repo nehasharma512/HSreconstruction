@@ -27,3 +27,9 @@ def rrmse_loss(outputs, label):
     error = torch.abs(outputs-label)/label
     rrmse = torch.mean(error.view(-1))
     return rrmse
+
+def rrmse(outputs,label):
+    """Calculate the relative RMSE"""
+    error = torch.pow(torch.abs(outputs-label)/label,2)
+    rrmse = torch.mean(error.view(-1))
+    return rrmse

@@ -12,18 +12,18 @@ import time
 import scipy.io as sio
 
 from dataset import DatasetFromHdf5
-from resblock import resblock,conv_batch_relu_res_block
+from resblock import resblock,conv_relu_res_relu_block
 from utils import AverageMeter,initialize_logger,save_checkpoint,record_loss
-from loss import rrmse_loss
+from loss import rrmse_loss,rrmse
 
 def main():
     
     cudnn.benchmark = True
-    base_path = '/home/nsa84/res_clean_code/train' 
+    base_path = '/home/nsa84/HSreconstruction/res_clean_code/train' 
     # Dataset
     train_data = DatasetFromHdf5(base_path+'/train.h5')
     print(len(train_data))
-    val_data = DatasetFromHdf5(base_path+'/test.h5')
+    val_data = DatasetFromHdf5(base_path+'/testclean_si50_st80.h5')
     print(len(val_data))
 
     # Data Loader (Input Pipeline)
@@ -34,12 +34,12 @@ def main():
                                    pin_memory=True)
     val_loader = DataLoader(dataset=val_data,
                             num_workers=1, 
-                            batch_size=64,
+                            batch_size=1,
                             shuffle=False,
                            pin_memory=True)
 
     # Model               
-    model = resblock(conv_batch_relu_res_block, 16, 3,31)
+    model = resblock(conv_relu_res_relu_block, 16, 3,31)
     if torch.cuda.device_count() > 1:
         model = nn.DataParallel(model)
     if torch.cuda.is_available():
