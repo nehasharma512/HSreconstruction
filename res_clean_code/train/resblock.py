@@ -10,18 +10,19 @@ class conv_batch_relu_res_block(nn.Module):
     def __init__(self):
         super(conv_batch_relu_res_block, self).__init__()
         self.conv1 = conv3x3(64, 64)
-        self.batch = nn.BatchNorm2d(64, eps=0.0001, momentum=0.95)
+        self.batch1 = nn.BatchNorm2d(64, eps=0.0001, momentum=0.95)
         self.relu1 = nn.ReLU(inplace=True)
         self.conv2 = conv3x3(64, 64)
+        self.batch2 = nn.BatchNorm2d(64, eps=0.0001, momentum=0.95)
         self.relu2 = nn.ReLU(inplace=True)
 
     def forward(self, x):
         residual = x
         out = self.conv1(x)
-        out = self.batch(out)
+        out = self.batch1(out)
         out = self.relu1(out)
         out = self.conv2(out)
-        out = torch.mul(out,0.1)
+        out = self.batch2(out)
         out = torch.add(out,residual)
         out = self.relu2(out)
         return out
