@@ -21,7 +21,7 @@ class conv_batch_relu_res_block(nn.Module):
         out = self.batch(out)
         out = self.relu1(out)
         out = self.conv2(out)
-	out = torch.mul(out,0.1)
+	#out = torch.mul(out,0.1)
         out = torch.add(out,residual)
         out = self.relu2(out)
         return out
